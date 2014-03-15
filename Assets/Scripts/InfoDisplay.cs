@@ -24,7 +24,6 @@ public class InfoDisplay : MonoBehaviour {
 		infoText = transform.FindChild("info_display_number-display").gameObject.GetComponent<TextMesh>();
 
 		SetInfoType ();
-		print("remaining start time: "+ QuickStart.quickStart.RemainingTime);
 	}
 
 	/// <summary>

@@ -2,16 +2,25 @@
 using System.Collections;
 
 public class GameController : MonoBehaviour {
-
 	public static GameController instance;
 
-	void Awake(){
-		if(instance==null){
+	[HideInInspector]
+	public StageController stageStuff;
+
+	void Awake() {
+		if(instance == null) {
 			DontDestroyOnLoad(this.gameObject);
-			instance=this;
+			instance = this;
 		}
-		else if(instance!=this){
+		else if(instance!= this) {
 			Destroy(gameObject);
 		}
+
+		stageStuff = GetComponent<StageController>();
+	}
+
+	void Start() {
+		stageStuff.enabled = false;
 	}
 }
+

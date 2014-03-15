@@ -13,14 +13,15 @@ public class StageController : MonoBehaviour {
 		get { return remainingTime; }
 	}
 
+
 	void Awake() {
 		stageController = this;
 		startTime = Time.time;
-		
 	}
 
+
 	// Update is called once per frame
-	void Update (){
+	void Update () {
 		LevelCountdown();
 	}
 

@@ -21,38 +21,42 @@ public class QuickStart : MonoBehaviour {
 		startTime = Time.time;
 	}
 
+
 	// Use this for initialization
 	void Start () {
 		entranceDoor.renderer.enabled = true;
 		entranceDoor.collider.enabled = true;
 	}
 
+
 	// Update is called once per frame
 	void Update () {
 		remainingTime = Mathf.Clamp(remainingTime, 0, startTimeLimit);
 
 		CountdownStartTime();
-		
+
 		if(remainingTime <= 0.0f) {
 			StartGame();
 		}
 	}
+
 
 	void CountdownStartTime() {
 		timer = Time.time-startTime;
 		remainingTime = startTimeLimit-timer;
 	}
 
-	public void StartGame(){
-		print("Starting game...");
-		
+
+	public void StartGame() {
+
 		//open the door
-		entranceDoor.renderer.enabled = true;
-		entranceDoor.collider.enabled = true;
+		entranceDoor.renderer.enabled = false;
+		entranceDoor.collider.enabled = false;
 
 		//turn the quick start button off
-		collider.enabled=false;
-		
+		collider.enabled = false;
+
 		//start level timer
+		GameController.instance.stageStuff.enabled = true;
 	}
 }
