@@ -7,14 +7,14 @@ public class LevelEnd : MonoBehaviour {
 
 	public float loadTime;
 
+	GameObject endDoor;
+
 	// Use this for initialization
-	void Start () {
-
+	void Awake (){
+		levelEnd=this;
+		
+		endDoor = EndRoom.endRoom.endRoomDoor;
 	}
-
-
-	// Update is called once per frame
-	void Update () { }
 
 	void OnTriggerEnter(Collider other) {
 		if(other.CompareTag("Player")) {
@@ -22,16 +22,18 @@ public class LevelEnd : MonoBehaviour {
 		}
 	}
 
-
 	void OnTriggerStay(Collider other) {
 		if(other.CompareTag("Player")) {
 			Invoke("LoadNextLevel", loadTime);
 		}
 	}
 
-	void EndLevel() {
+	void EndLevel(){
+		
 		//close the exit room door
-
+		endDoor.collider.enabled = true;
+		endDoor.renderer.enabled = true;
+		
 		//stop the timer
 	}
 

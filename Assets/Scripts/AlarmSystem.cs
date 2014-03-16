@@ -54,7 +54,7 @@ public class AlarmSystem : MonoBehaviour {
 		initialLightIntensity = alarmLight.intensity;
 		targetIntensity=highIntensity;
 
-		tripwires = GameObject.FindGameObjectsWithTag ("Tripwire");
+		tripwires = GameObject.FindGameObjectsWithTag (TagsAndLayers.tripwire);
 	}
 	
 	// Update is called once per frame
@@ -134,7 +134,7 @@ public class AlarmSystem : MonoBehaviour {
 				// ... then set the target to low.
 				targetIntensity = lowIntensity;
 			else
-				// Otherwise set the targer to high.
+				// Otherwise set the target to high.
 				targetIntensity = highIntensity;
 		}
 	}

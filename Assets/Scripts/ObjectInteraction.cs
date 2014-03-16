@@ -8,11 +8,28 @@ using System.Collections;
 public class ObjectInteraction : MonoBehaviour {
 	public LayerMask interactiveLayer;
 	public float interactionDistance;
+	public Texture2D interactCursor;
+
+	bool lookingAtInteractiveObject;
+
+	void Start() {
+		lookingAtInteractiveObject = false;
+	}
 
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetMouseButtonDown (0)) {
-			InteractWithEnvironment ();
+		InteractWithEnvironment ();
+	}
+
+	void OnGUI() {
+		if(lookingAtInteractiveObject) {
+			if(interactCursor!= null) {
+				float cursorX = Screen.width/2-interactCursor.width/2;
+				float cursorY = Screen.height/2-interactCursor.height/2;
+				float cursorWidth = interactCursor.width;
+				float cursorHeight = interactCursor.height;
+				GUI.DrawTexture(new Rect(cursorX, cursorY, cursorWidth, cursorHeight), interactCursor);
+			}
 		}
 	}
 
@@ -21,33 +38,51 @@ public class ObjectInteraction : MonoBehaviour {
 		RaycastHit hit;
 		Debug.DrawRay (ray.origin, ray.direction, Color.green);
 		if(Physics.Raycast (ray, out hit, interactionDistance, interactiveLayer)) {
-			if(hit.transform.CompareTag ("AlarmBox")) {
-				if(AlarmSystem.alarmSystem.AlarmActive) {
-					AlarmSystem.alarmSystem.AlarmActive = false;
-					hit.transform.gameObject.GetComponent<Button>().ClickButton ();
-					hit.transform.parent.gameObject.GetComponent<AlarmBox>().IsDead = true;
-				}
-				else if(!AlarmSystem.alarmSystem.AlarmActive) {
-					print ("Cannot disable alarm: not currently active");
-				}
-			}
+			//display an image in the middle of the screen
+			lookingAtInteractiveObject = true;
 
-			if(hit.transform.CompareTag("MapScreenButton")) {
-				MapScreenButton button = hit.transform.gameObject.GetComponent<MapScreenButton>();
-				if(button.rightSideButton)
-					MapScreen.mapScreen.SelectedFloor++;
-				if(!button.rightSideButton)
-					MapScreen.mapScreen.SelectedFloor--;
+			if(Input.GetMouseButtonDown(0)) {
+				//perform action based on the interaction
+				SelectInteractiveObject(hit);
 			}
+		}
 
-			if(hit.transform.CompareTag("QuickStartButton")) {
-				//start the game
-				QuickStart.quickStart.StartGame();
-			}
+		else {
+			lookingAtInteractiveObject=false;
 		}
 	}
 
-	void SelectInteractiveObject(){
+	void SelectInteractiveObject(RaycastHit hit) {
+		switch(hit.transform.tag) {
+			case TagsAndLayers.alarmBox:
+				if(AlarmSystem.alarmSystem.AlarmActive) {
+				AlarmSystem.alarmSystem.AlarmActive = false;
+				hit.transform.gameObject.GetComponent<Button>().ClickButton ();
+				hit.transform.parent.gameObject.GetComponent<AlarmBox>().IsDead = true;
+			}
+			else if(!AlarmSystem.alarmSystem.AlarmActive) {
+				print ("Cannot disable alarm: not currently active");
+			}
 
+			break;
+
+			case TagsAndLayers.mapScreenButton:
+				MapScreenButton button = hit.transform.gameObject.GetComponent<MapScreenButton>();
+			if(button.rightSideButton)
+				MapScreen.mapScreen.SelectedFloor++;
+			if(!button.rightSideButton)
+				MapScreen.mapScreen.SelectedFloor--;
+			break;
+
+			case TagsAndLayers.quickStartButton:
+				//start the game
+				QuickStart.quickStart.StartGame();
+			break;
+			
+			case TagsAndLayers.exitRoomButton:
+				//only open door if end room gives player permission
+				EndRoom.endRoom.OpenEndRoom();
+				break;				
+		}
 	}
 }

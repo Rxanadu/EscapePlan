@@ -6,32 +6,46 @@ public class EndRoom : MonoBehaviour {
 	public static EndRoom endRoom;
 
 	public int prisonersLeft;	//amount of prisoners left to open the door
+	bool accessDenied;
 
-	public GameObject endRoomDoor, endRoomButton, levelEnd;
+	public GameObject endRoomDoor, levelEnd;
+
+	public bool AccessDenied {
+		get { return accessDenied; }
+	}
+
 
 	void Awake() {
 		endRoom = this;
-		AccessDenied();
 	}
 
-	
+
+
+	void Start() {
+		accessDenied = true;
+		LockdownEndRoom();
+	}
+
+
 	// Update is called once per frame
 	void Update () {
 		if(prisonersLeft >0)
-		AccessDenied();
-		if(prisonersLeft == 0)
-		AccessGranted(); }
+		accessDenied = true;
+		else if(prisonersLeft <= 0)
+		accessDenied = false;
+	}
 
-	void AccessDenied(){
+	void LockdownEndRoom() {
 		endRoomDoor.renderer.enabled = true;
 		endRoomDoor.collider.enabled = true;
-		endRoomButton.collider.enabled = false;
-		levelEnd.collider.enabled = false; }
+		levelEnd.collider.enabled = false;
+	}
 
-	void AccessGranted(){
-		endRoomDoor.renderer.enabled = false;
-		endRoomDoor.collider.enabled = false;
-		endRoomButton.collider.enabled = true;
-		levelEnd.collider.enabled = true;
+	public void OpenEndRoom() {
+		if(!accessDenied) {
+			endRoomDoor.renderer.enabled = false;
+			endRoomDoor.collider.enabled = false;
+			levelEnd.collider.enabled = true;
 		}
+	}
 }
