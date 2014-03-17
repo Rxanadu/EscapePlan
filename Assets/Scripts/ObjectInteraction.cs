@@ -46,9 +46,8 @@ public class ObjectInteraction : MonoBehaviour {
 				SelectInteractiveObject(hit);
 			}
 		}
-
 		else {
-			lookingAtInteractiveObject=false;
+			lookingAtInteractiveObject = false;
 		}
 	}
 
@@ -56,33 +55,35 @@ public class ObjectInteraction : MonoBehaviour {
 		switch(hit.transform.tag) {
 			case TagsAndLayers.alarmBox:
 				if(AlarmSystem.alarmSystem.AlarmActive) {
-				AlarmSystem.alarmSystem.AlarmActive = false;
-				hit.transform.gameObject.GetComponent<Button>().ClickButton ();
-				hit.transform.parent.gameObject.GetComponent<AlarmBox>().IsDead = true;
-			}
-			else if(!AlarmSystem.alarmSystem.AlarmActive) {
-				print ("Cannot disable alarm: not currently active");
-			}
-
-			break;
+					AlarmSystem.alarmSystem.AlarmActive = false;
+					hit.transform.gameObject.GetComponent<Button>().ClickButton ();
+					hit.transform.parent.gameObject.GetComponent<AlarmBox>().IsDead = true;
+				}
+				else if(!AlarmSystem.alarmSystem.AlarmActive) {
+					print ("Cannot disable alarm: not currently active");
+				}
+				break;
 
 			case TagsAndLayers.mapScreenButton:
 				MapScreenButton button = hit.transform.gameObject.GetComponent<MapScreenButton>();
-			if(button.rightSideButton)
-				MapScreen.mapScreen.SelectedFloor++;
-			if(!button.rightSideButton)
-				MapScreen.mapScreen.SelectedFloor--;
+				if(button.rightSideButton)
+					MapScreen.mapScreen.SelectedFloor++;
+				if(!button.rightSideButton)
+					MapScreen.mapScreen.SelectedFloor--;
 			break;
 
 			case TagsAndLayers.quickStartButton:
 				//start the game
 				QuickStart.quickStart.StartGame();
-			break;
-			
+				break;
+
 			case TagsAndLayers.exitRoomButton:
 				//only open door if end room gives player permission
 				EndRoom.endRoom.OpenEndRoom();
-				break;				
+				break;
+			case TagsAndLayers.prisonCellButton:
+				hit.transform.gameObject.GetComponent<PrisonCell>().FreePrisoner();
+				break;
 		}
 	}
 }

@@ -17,13 +17,13 @@ public class LevelEnd : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if(other.CompareTag("Player")) {
+		if(other.CompareTag(TagsAndLayers.player)) {
 			EndLevel();
 		}
 	}
 
 	void OnTriggerStay(Collider other) {
-		if(other.CompareTag("Player")) {
+		if(other.CompareTag(TagsAndLayers.player)) {
 			Invoke("LoadNextLevel", loadTime);
 		}
 	}

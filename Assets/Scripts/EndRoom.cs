@@ -10,6 +10,12 @@ public class EndRoom : MonoBehaviour {
 
 	public GameObject endRoomDoor, levelEnd;
 
+	public int PrisonersLeft {
+		get { return prisonersLeft; }
+	}
+
+
+
 	public bool AccessDenied {
 		get { return accessDenied; }
 	}
@@ -20,10 +26,13 @@ public class EndRoom : MonoBehaviour {
 	}
 
 
-
 	void Start() {
 		accessDenied = true;
 		LockdownEndRoom();
+
+		//temporary call for all prisoners
+		if(GameObject.FindGameObjectsWithTag(TagsAndLayers.prisonCell).Length !=null)
+			prisonersLeft = GameObject.FindGameObjectsWithTag(TagsAndLayers.prisonCell).Length;
 	}
 
 

@@ -5,7 +5,8 @@ public class InfoDisplay : MonoBehaviour {
 	public enum InfoType {
 		TimeRemaining,
 		TimeLimit,
-		PrisonerAmount
+		PrisonerAmount,
+		PrisonersRemaining
 	}
 
 	public InfoType infoType;
@@ -13,7 +14,7 @@ public class InfoDisplay : MonoBehaviour {
 	TextMesh infoText;
 	string infoTextString;
 
-	public Texture2D timeRemaining, timeLimit, prisonerAmount;
+	public Texture2D timeRemaining, timeLimit, prisonerAmount, prisonersRemaining;
 
 	void Start() {
 		infoTextString = "";
@@ -48,6 +49,14 @@ public class InfoDisplay : MonoBehaviour {
 			case InfoType.PrisonerAmount:
 				transform.Find("info-display_message").gameObject.renderer.material.mainTexture = prisonerAmount;
 				infoText.text = "00";
+				break;
+			case InfoType.PrisonersRemaining:
+				transform.Find("info-display_message").gameObject.renderer.material.mainTexture = prisonersRemaining;
+				if(EndRoom.endRoom.PrisonersLeft>0)
+					infoTextString = EndRoom.endRoom.PrisonersLeft.ToString();
+				else
+					infoTextString = "0";
+				infoText.text = infoTextString;
 				break;
 		}
 	}

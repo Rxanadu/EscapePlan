@@ -13,7 +13,9 @@ public class TagsAndLayers {
 	public const string mapScreenButton = "MapScreenButton";
 	public const string quickStartButton = "QuickStartButton";
 	public const string exitRoomButton = "ExitRoomButton";
-	public const string levelEnd= "LevelEnd";
+	public const string levelEnd = "LevelEnd";
+	public const string prisonCell = "PrisonCell";
+	public const string prisonCellButton = "PrisonCellButton";
 	#endregion
 
 	#region Layers
