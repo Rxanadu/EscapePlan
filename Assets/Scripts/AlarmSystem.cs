@@ -10,6 +10,7 @@ public class AlarmSystem : MonoBehaviour {
 
 	public static AlarmSystem alarmSystem;
 
+	#region Fields
 	bool alarmActive;
 	float initialLightIntensity;
 	Light alarmLight;
@@ -22,43 +23,49 @@ public class AlarmSystem : MonoBehaviour {
 
 	public Color alarmLightColor;
 	public float alarmRate;
-	public float highIntensity,lowIntensity;
+	public float highIntensity, lowIntensity;
 	public float changeMargin;
 	public float deatTimeLimit;
+	#endregion
 
-	public bool AlarmActive{
-		get{return alarmActive;}
-		set{alarmActive=value;}
+	public bool AlarmActive {
+		get { return alarmActive; }
+		set { alarmActive = value; }
 	}
 
-	public float RemainingTime{
-		get{return remainingTime;}
+
+
+	public float RemainingTime {
+		get { return remainingTime; }
 	}
 
-	void Awake(){
-		if(alarmSystem==null){
-			DontDestroyOnLoad (this.gameObject);
-			alarmSystem=this;
-		}
-		else if(alarmSystem!=this)
-			Destroy (gameObject);
+
+
+	#region Functions
+	void Awake() {
+		alarmSystem = this;
 
 		ResetDeathTimer ();
 	}
 
+
+
 	// Use this for initialization
 	void Start () {
-		alarmActive=false;
+		alarmActive = false;
 		alarmLight = GetComponent<Light>();
-		initalLightColor =alarmLight.color;
+		initalLightColor = alarmLight.color;
 		initialLightIntensity = alarmLight.intensity;
-		targetIntensity=highIntensity;
+		targetIntensity = highIntensity;
 
-		tripwires = GameObject.FindGameObjectsWithTag (TagsAndLayers.tripwire);
+		if(GameObject.FindGameObjectsWithTag (TagsAndLayers.tripwire).Length!= null)
+			tripwires = GameObject.FindGameObjectsWithTag (TagsAndLayers.tripwire);
 	}
-	
+
+
+
 	// Update is called once per frame
-	void Update () 
+	void Update ()
 	{
 		//clamp time for game
 		remainingTime = Mathf.Clamp (remainingTime, 0, deatTimeLimit);
@@ -69,57 +76,64 @@ public class AlarmSystem : MonoBehaviour {
 			CountdownDeathTimer ();
 			PlayAlarmSound ();
 		}
-		else{
+		else {
 			TurnAlarmOff ();
 			ResetDeathTimer ();
 			StopAlarmSound ();
 		}
 	}
-	
-	void TurnAlarmOn(){
+
+
+
+	void TurnAlarmOn() {
 		float alarmStep = alarmRate*Time.deltaTime;
 		alarmLight.color = alarmLightColor;
 		alarmLight.intensity = Mathf.Lerp(alarmLight.intensity, targetIntensity, alarmStep);
-		
+
 		CheckTargetIntensity();
 
 		//disable all tripwires
-		foreach(GameObject tripwire in tripwires){
-			tripwire.GetComponent<Tripwire>().enabled=false;
-			tripwire.GetComponent<LineRenderer>().enabled=false;
+		if(tripwires.Length!= null) {
+			foreach(GameObject tripwire in tripwires) {
+				tripwire.GetComponent<Tripwire>().enabled = false;
+				tripwire.GetComponent<LineRenderer>().enabled = false;
+			}
 		}
 	}
 
-	void TurnAlarmOff(){
+
+
+	void TurnAlarmOff() {
 		alarmLight.color = initalLightColor;
 		alarmLight.intensity = initialLightIntensity;
 
 		//enable all tripwires
-		foreach(GameObject tripwire in tripwires){
-			tripwire.GetComponent<Tripwire>().enabled=true;
-			tripwire.GetComponent<LineRenderer>().enabled=true;
+		if(tripwires.Length!= null) {
+			foreach(GameObject tripwire in tripwires) {
+				tripwire.GetComponent<Tripwire>().enabled = true;
+				tripwire.GetComponent<LineRenderer>().enabled = true;
+			}
 		}
 	}
 
-	void CountdownDeathTimer(){
-
+	void CountdownDeathTimer() {
 		deathTimer = Time.time-startTime;
 		remainingTime = deatTimeLimit-deathTimer;
 	}
 
-	void ResetDeathTimer(){
+	void ResetDeathTimer() {
 		startTime = Time.time;
-		remainingTime=deatTimeLimit;
+		remainingTime = deatTimeLimit;
 	}
 
-	void PlayAlarmSound(){
-		if(!audio.isPlaying){
+	void PlayAlarmSound() {
+		if(!audio.isPlaying) {
 			audio.Play ();
 		}
 	}
 
-	void StopAlarmSound(){
-		if(audio.isPlaying){
+	void StopAlarmSound() {
+		if(audio.isPlaying) {
 			audio.Stop ();
 		}
 	}
@@ -136,6 +150,7 @@ public class AlarmSystem : MonoBehaviour {
 			else
 				// Otherwise set the target to high.
 				targetIntensity = highIntensity;
-		}
+			}
 	}
+	#endregion
 }

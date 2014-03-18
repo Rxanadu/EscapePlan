@@ -31,17 +31,19 @@ public class EndRoom : MonoBehaviour {
 		LockdownEndRoom();
 
 		//temporary call for all prisoners
-		if(GameObject.FindGameObjectsWithTag(TagsAndLayers.prisonCell).Length !=null)
-			prisonersLeft = GameObject.FindGameObjectsWithTag(TagsAndLayers.prisonCell).Length;
+		if(GameObject.FindGameObjectsWithTag(TagsAndLayers.prisonCell).Length != null)
+		prisonersLeft = GameObject.FindGameObjectsWithTag(TagsAndLayers.prisonCell).Length;
 	}
 
 
 	// Update is called once per frame
 	void Update () {
-		if(prisonersLeft >0)
-		accessDenied = true;
-		else if(prisonersLeft <= 0)
-		accessDenied = false;
+		if(StageController.stageController.GameActive) {
+			if(prisonersLeft >0)
+				accessDenied = true;
+			else if(prisonersLeft <= 0)
+				accessDenied = false;
+		}
 	}
 
 	void LockdownEndRoom() {

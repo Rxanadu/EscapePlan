@@ -16,6 +16,7 @@ public class TagsAndLayers {
 	public const string levelEnd = "LevelEnd";
 	public const string prisonCell = "PrisonCell";
 	public const string prisonCellButton = "PrisonCellButton";
+	public const string prisoner = "Prisoner";
 	#endregion
 
 	#region Layers

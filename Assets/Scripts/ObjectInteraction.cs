@@ -82,7 +82,7 @@ public class ObjectInteraction : MonoBehaviour {
 				EndRoom.endRoom.OpenEndRoom();
 				break;
 			case TagsAndLayers.prisonCellButton:
-				hit.transform.gameObject.GetComponent<PrisonCell>().FreePrisoner();
+				hit.transform.gameObject.GetComponent<PrisonCell>().PrisonerReleased = true;
 				break;
 		}
 	}
