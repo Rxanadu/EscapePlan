@@ -5,7 +5,7 @@ public class GameController : MonoBehaviour {
 	public static GameController instance;
 
 	[HideInInspector]
-	public StageController stageStuff;
+	public StageController stageControl;
 
 	void Awake() {
 		if(instance == null) {
@@ -16,11 +16,12 @@ public class GameController : MonoBehaviour {
 			Destroy(gameObject);
 		}
 
-		stageStuff = GetComponent<StageController>();
+		stageControl = GetComponent<StageController>();
 	}
 
-	void Start() {
-		stageStuff.enabled = false;
-	}
+    void Start()
+    {
+        stageControl.enabled = false;
+    }
 }
 

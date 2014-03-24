@@ -1,66 +1,97 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StageController : MonoBehaviour {
+/// <summary>
+/// controls major aspects of each stage
+/// </summary>
+public class StageController : MonoBehaviour
+{
 
-	public static StageController stageController;
+    public static StageController stageController;
 
-	bool gameActive;
-	float startTime, timer, remainingTime;
-	GameObject player;
+    bool gameActive;
+    float startTime, timer, remainingTime;
+    GameObject player;
 
-	public float levelTimeLimit;
+    public ScreenFader screenFader;
+    public float levelTimeLimit;
+    public Color fullFade, noFade;
+    public float fadeDuration;
 
-	public bool GameActive {
-		get { return gameActive; }
-	}
+    public bool GameActive
+    {
+        get { return gameActive; }
+    }
 
+    public float RemainingTime
+    {
+        get { return remainingTime; }
+    }
 
+    void Awake()
+    {
+        stageController = this;
+        startTime = Time.time;
+        player = GameObject.FindGameObjectWithTag(TagsAndLayers.player);       
+    }
 
-	public float RemainingTime {
-		get { return remainingTime; }
-	}
+    void Start() {
+        print("Starting 'Start' function...");
+        gameActive = true;
 
+        //StopCoroutine("StopGame");
+        //screenFader.SetScreenOverlayColor(fullFade);
+        //screenFader.StartFade(noFade, fadeDuration);
 
-	void Awake() {
-		stageController = this;
-		startTime = Time.time;
-		player = GameObject.FindGameObjectWithTag(TagsAndLayers.player);
+        //StartCoroutine(StopGame());
+    }
 
-		gameActive = true;
-	}
+    // Update is called once per frame
+    void Update()
+    {
+        LevelCountdown();
 
+        //if (remainingTime <= 0)
+        //    StopGame();
 
-	// Update is called once per frame
-	void Update () {
-		LevelCountdown();
+        print("Game Active: " + gameActive);
 
-		if(remainingTime <= 0||
-			AlarmSystem.alarmSystem.RemainingTime<= 0) {
-			StopGame();
-		}
-	}
+        //if (AlarmSystem.alarmSystem.RemainingTime <= 0)       
+        //    StopGame();        
+    }
 
+    void LevelCountdown()
+    {
+        timer = Time.time - startTime;
+        remainingTime = levelTimeLimit - timer;
+    }
 
-	void LevelCountdown() {
-		timer = Time.time-startTime;
-		remainingTime = levelTimeLimit -timer;
-	}
+    ///<remarks>acts as 'Game Over' function
+    ///	only run when either level timer or alarm timer ends</remarks>
 
-	///<remarks>acts as 'Game Over' function
-	///	only run when either level timer or alarm timer ends</remarks>
-	
-	void StopGame() {
-		//disable exit room
-		gameActive = false;
+    IEnumerator StopGame()
+    {
+        //activate game for duration of level time limit
+        gameActive = true;
 
-		//disable player's movement, look movement
-		player.GetComponent<CharacterMotor>().enabled=false;
-		player.GetComponent<MouseLook>().enabled=false;
-		Camera.main.GetComponent<MouseLook>().enabled=false;
+        yield return new WaitForSeconds(levelTimeLimit);
 
-		//fade out screen
-		
-		//reload scene after fade
-	}
+        //disable exit room
+        gameActive = false;
+
+        //disable player's movement, look movement
+        player.GetComponent<CharacterMotor>().enabled = false;
+        player.GetComponent<MouseLook>().enabled = false;
+        Camera.main.GetComponent<MouseLook>().enabled = false;
+
+        //fade out screen
+        screenFader.SetScreenOverlayColor(noFade);
+        screenFader.StartFade(fullFade, fadeDuration);
+
+        yield return new WaitForSeconds(fadeDuration);
+
+        //reload scene after fade
+        Application.LoadLevel(Application.loadedLevel);
+        yield break;
+    }
 }

@@ -13,21 +13,18 @@ public class QuickStart : MonoBehaviour {
 	public float RemainingTime {
 		get { return remainingTime; }
 	}
-
-
+    
 	void Awake() {
 		quickStart = this;
 
 		startTime = Time.time;
 	}
-
-
+    
 	// Use this for initialization
 	void Start () {
 		entranceDoor.renderer.enabled = true;
 		entranceDoor.collider.enabled = true;
 	}
-
 
 	// Update is called once per frame
 	void Update () {
@@ -39,15 +36,13 @@ public class QuickStart : MonoBehaviour {
 			StartGame();
 		}
 	}
-
-
+   
 	void CountdownStartTime() {
 		timer = Time.time-startTime;
 		remainingTime = startTimeLimit-timer;
 	}
 
-
-	public void StartGame() {
+   	public void StartGame() {
 
 		//open the door
 		entranceDoor.renderer.enabled = false;
@@ -57,6 +52,6 @@ public class QuickStart : MonoBehaviour {
 		collider.enabled = false;
 
 		//start level timer
-		GameController.instance.stageStuff.enabled = true;
+		GameController.instance.stageControl.enabled = true;
 	}
 }
