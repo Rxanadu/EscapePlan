@@ -21,6 +21,15 @@ public class Crosshair : MonoBehaviour
         childTransforms = GetComponentsInChildren<Transform>();
     }
 
+    void Start()
+    {
+        if (Application.platform != RuntimePlatform.WindowsEditor ||
+            Application.platform != RuntimePlatform.OSXEditor)
+        {
+            Screen.lockCursor = true;
+        }
+    }
+
     void OnGUI()
     {
         //GetComponentsInChildren<Transform>() will allways have a length of at least 1
