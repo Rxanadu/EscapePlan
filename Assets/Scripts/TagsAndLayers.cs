@@ -17,6 +17,12 @@ public class TagsAndLayers {
 	public const string prisonCell = "PrisonCell";
 	public const string prisonCellButton = "PrisonCellButton";
 	public const string prisoner = "Prisoner";
+    public const string objectSpawner = "ObjectSpawner";
+    public const string musicController = "MusicController";
+    public const string spawnDrop = "SpawnDrop";
+    public const string jumppadPillar = "JumppadPillar";
+    public const string gameTimer = "GameTimer";
+    public const string deathArea = "DeathArea";
 	#endregion
 
 	#region Layers
