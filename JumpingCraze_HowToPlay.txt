@@ -1,0 +1,8 @@
+Game Name: Jumping Craze
+How to Play:
+	Controls: 
+		WASD - Movement
+	Rules:
+		Jump on the platforms until the timer runs out
+		Collect time extensions to add time to the clock
+		If you run out of time or you land in the water, the game ends
