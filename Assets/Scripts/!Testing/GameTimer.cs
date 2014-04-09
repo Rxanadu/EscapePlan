@@ -35,16 +35,31 @@ public class GameTimer : MonoBehaviour
     void Update()
     {
 
+        //do nothing if timer text cannot be found
         if (timerText == null)
             return;
 
-        string timerString = string.Format("{0:00}", timer);
-        timerText.text = timerString;
-        timer -= Time.deltaTime;
+        //display default text if game has not started or if it has finished
+        if (jgr.jgs.gameState != JumpGameState.GameStateJump.Started)
+        {
+            timerText.text = "";
+        }
 
-        if (timer <= 0)
+        //count time down when game starts
+        if (jgr.jgs.gameState == JumpGameState.GameStateJump.Started)
+        {
+            string timerString = string.Format("{0:00}", timer);
+            timerText.text = timerString;
+            timer -= Time.deltaTime;
+        }
+
+        if (timer <= 0 || jgr.jgs.gameState == JumpGameState.GameStateJump.Ended)
         {
             timer = 0;
+
+            //only call if time <= 0
+            if (jgr.jgs.gameState != JumpGameState.GameStateJump.Ended)
+                jgr.jgs.gameState = JumpGameState.GameStateJump.Ended;
         }
 
         if (showGUI)
@@ -59,11 +74,11 @@ public class GameTimer : MonoBehaviour
     {
         if (testingGUI)
         {
-            GUI.Box(new Rect(1, 1, 1, 1), timer.ToString("0"));
+            GUI.Box(new Rect(10, 10, 30, 30), timer.ToString("0"));
 
             if (showGUI)
             {
-                GUI.Box(new Rect(2, 2, 2, 2), "+" + addTime.ToString("0"));
+                GUI.Box(new Rect(15, 30, 30, 30), "+" + addTime.ToString("0"));
                 Invoke("ShowTimerGUI", timeDisplayFrame);
             }
         }

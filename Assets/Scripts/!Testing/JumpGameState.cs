@@ -9,6 +9,7 @@ public class JumpGameState : MonoBehaviour {
 
     public enum GameStateJump
     {
+        IntroducingGame,
         Starting,
         Started,
         Ended

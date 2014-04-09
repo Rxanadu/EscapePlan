@@ -15,6 +15,12 @@ public class Jumppad : MonoBehaviour
 
     bool pillarInactive;
     float inactiveTimer;
+    JumpGameReferences jgr;
+
+    void Awake()
+    {
+        jgr = GameObject.FindGameObjectWithTag(TagsAndLayers.gameController).GetComponent<JumpGameReferences>();
+    }
 
     void Start()
     {
@@ -34,7 +40,8 @@ public class Jumppad : MonoBehaviour
             transform.parent.renderer.enabled = false;
             transform.parent.collider.enabled = false;
 
-            inactiveTimer += Time.deltaTime;
+            if (jgr.jgs.gameState == JumpGameState.GameStateJump.Started)
+                inactiveTimer += Time.deltaTime;
         }
 
         if (!pillarInactive)
@@ -48,7 +55,9 @@ public class Jumppad : MonoBehaviour
             transform.parent.collider.enabled = true;
         }
 
-        if (inactiveTimer >= inactiveTimeLimit) {
+        if (inactiveTimer >= inactiveTimeLimit ||
+            jgr.jgs.gameState == JumpGameState.GameStateJump.Ended)
+        {
             //reactivate pillar, jumppad
             pillarInactive = false;
 

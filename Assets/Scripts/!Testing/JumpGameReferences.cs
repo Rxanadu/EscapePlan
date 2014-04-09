@@ -16,6 +16,7 @@ public class JumpGameReferences : MonoBehaviour
     public SpawnDrop spawnDrop;
     public GameObject[] objectSpawners;
     public GameObject[] jumppadPillars;
+    public GameObject player;
 
     void Awake()
     {
@@ -27,5 +28,6 @@ public class JumpGameReferences : MonoBehaviour
 
         objectSpawners = GameObject.FindGameObjectsWithTag(TagsAndLayers.objectSpawner);
         jumppadPillars = GameObject.FindGameObjectsWithTag(TagsAndLayers.jumppadPillar);
+        player = GameObject.FindGameObjectWithTag(TagsAndLayers.player);
     }
 }
