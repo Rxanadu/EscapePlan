@@ -1,20 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StopOnTimeout : MonoBehaviour {
+public class StopOnTimeout : MonoBehaviour
+{
 
     public float lifeTime;
     public bool isProjectile;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         if (isProjectile)
             Invoke("DisableProjectile", lifeTime);
         else if (!isProjectile)
-            Destroy(gameObject, lifeTime);
-	}
+        {
+            AudioSource audioSource = GetComponent<AudioSource>();
 
-    void DisableProjectile() {
+            if (audioSource == null)
+                Destroy(gameObject, lifeTime);
+            else
+                Destroy(gameObject, audioSource.audio.clip.length);
+        }
+    }
+
+    void DisableProjectile()
+    {
         gameObject.SetActive(false);
     }
 }

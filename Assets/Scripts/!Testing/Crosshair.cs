@@ -23,11 +23,11 @@ public class Crosshair : MonoBehaviour
 
     void Start()
     {
-        if (Application.platform != RuntimePlatform.WindowsEditor ||
-            Application.platform != RuntimePlatform.OSXEditor)
-        {
-            Screen.lockCursor = true;
-        }
+        //if (Application.platform != RuntimePlatform.WindowsEditor ||
+        //    Application.platform != RuntimePlatform.OSXEditor)
+        //{
+        //    Screen.lockCursor = true;
+        //}
     }
 
     void OnGUI()

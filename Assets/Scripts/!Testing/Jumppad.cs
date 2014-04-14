@@ -9,13 +9,20 @@ using System.Collections;
 public class Jumppad : MonoBehaviour
 {
 
-    public float jumpForce = 50.0f;     //force at which player jumps
+    public float jumpForce = 50.0f;         //force at which player jumps
     public float inactiveTimeLimit = 7.0f;
     public AudioClip[] bounceNoises;
 
     bool pillarInactive;
     float inactiveTimer;
     JumpGameReferences jgr;
+
+    //used for scaling pillar to a small amount
+    Vector3 initScale, lowScale;
+
+    public Vector3 LowScale {
+        get { return lowScale; }
+    }
 
     void Awake()
     {
@@ -25,6 +32,8 @@ public class Jumppad : MonoBehaviour
     void Start()
     {
         audio.playOnAwake = false;
+        initScale = transform.parent.transform.localScale;
+        lowScale = new Vector3(2, initScale.y, 2);
     }
 
     // Update is called once per frame

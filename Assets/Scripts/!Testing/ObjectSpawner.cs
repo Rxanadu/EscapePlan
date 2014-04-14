@@ -7,7 +7,6 @@ using System.Collections;
 public class ObjectSpawner : MonoBehaviour
 {
     public GameObject spawnObject;
-    public int activeObjectCount;       //number of active objects in the world
 
     float spawnObjectCount;             //number of objects to spawn into the world
     GameObject[] objectSpawnpoints;     //spawnpoints at which objects will spawn at

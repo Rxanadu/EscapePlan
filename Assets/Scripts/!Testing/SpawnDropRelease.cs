@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class SpawnDropRelease : MonoBehaviour
 {
 
@@ -33,6 +34,7 @@ public class SpawnDropRelease : MonoBehaviour
         if (releaseTimer >= releaseTimeLimit) {
             spawnDropHatch.collider.enabled = false;
             spawnDropHatch.renderer.enabled = false;
+            audio.PlayOneShot(audio.clip);
             jgr.jgs.gameState = JumpGameState.GameStateJump.Started;
             releaseTimer = 0.0f;
         }

@@ -10,12 +10,26 @@ public class JumpGameReferences : MonoBehaviour
 
     [HideInInspector]
     public JumpGameState jgs;
+
+    [HideInInspector]
     public MusicController musicController;
+
+    [HideInInspector]
     public GameTimer gameTimer;
-    public DeathArea deathArea;    
+
+    [HideInInspector]
+    public DeathArea deathArea;
+
+    [HideInInspector]
     public SpawnDrop spawnDrop;
+
+    [HideInInspector]
     public GameObject[] objectSpawners;
+
+    [HideInInspector]
     public GameObject[] jumppadPillars;
+
+    [HideInInspector]
     public GameObject player;
 
     void Awake()
