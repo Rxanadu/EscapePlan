@@ -42,12 +42,17 @@ public class MusicController : MonoBehaviour
     {
         switch (jgr.jgs.gameState)
         {
-            case JumpGameState.GameStateJump.Starting:
+            case JumpGameState.GameStateJump.IntroducingGame:
                 if (!audio.isPlaying)
                 {
                     audio.loop = true;
                     audio.clip = startingClip;
                     audio.Play();
+                }
+                break;
+            case JumpGameState.GameStateJump.Starting:
+                if (audio.isPlaying) {
+                    audio.Stop(); ;
                 }
                 break;
             case JumpGameState.GameStateJump.Started:

@@ -46,7 +46,7 @@ public class TimeExtension : MonoBehaviour
             jgr.gameTimer.timer += addedTime;
 
             //display added time limit
-            jgr.gameTimer.ShowGUI = true;
+            jgr.gameTimer.ShowAddTime = true;
 
             //set time extension as collected
             extensionCollected = true;

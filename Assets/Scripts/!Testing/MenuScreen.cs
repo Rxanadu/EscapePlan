@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// display main menu at start of the game
+/// <remarks>place on an empty game object.
+/// Ensure the game object has a title and credits child game object</remarks>
+/// </summary>
 public class MenuScreen : MonoBehaviour
 {
     JumpGameReferences jgr;
 
     public GUISkin menuSkin;
     public GUITexture howToPlayTexture;
+    public GUIText bestTime;
     public Camera menuCamera;
 
     bool howToPlayActive = false;
@@ -26,6 +32,9 @@ public class MenuScreen : MonoBehaviour
             return;
         else
             menuCamera.depth = 1;
+
+        //display best time on screen
+        bestTime.text = PlayerPrefs.GetFloat("bestTime").ToString("{0:00}");
     }
 
     void Update()

@@ -13,11 +13,15 @@ public class GameTimer : MonoBehaviour
     public bool testingGUI = false;         //are we just testing the mechanics of the timer?
     public GUIText addTimeText;             //offical format for dislaying added time
 
-    bool showGUI = false;                   //are we showing the add time text?
+    bool showAddTime = false;               //are we showing the add time text?
     GUIText timerText;                      //official format for displaying current time on timer
     JumpGameReferences jgr;
+    float globalTimer;                      //timer used for best score purposes
+    float bestGameTime;
 
-    public bool ShowGUI { set { showGUI = value; } }
+    public bool ShowAddTime { set { showAddTime = value; } }
+
+    public float BestGameTime { get { return bestGameTime; } }
 
     void Awake()
     {
@@ -28,7 +32,12 @@ public class GameTimer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //hide add time text
         addTimeText.enabled = false;
+
+        //set up best time stuff
+        if (PlayerPrefs.HasKey("bestTime"))
+            bestGameTime = PlayerPrefs.GetFloat("bestTime");
     }
 
     // Update is called once per frame
@@ -51,22 +60,30 @@ public class GameTimer : MonoBehaviour
             string timerString = string.Format("{0:00}", timer);
             timerText.text = timerString;
             timer -= Time.deltaTime;
+
+            //count global time in game
+            globalTimer += Time.deltaTime;
         }
 
         if (timer <= 0 || jgr.jgs.gameState == JumpGameState.GameStateJump.Ended)
         {
+            //save global time here
+            SaveBestTime();
+
+            //reset timer
             timer = 0;
 
             //only call if time <= 0
             if (jgr.jgs.gameState != JumpGameState.GameStateJump.Ended)
-                jgr.jgs.gameState = JumpGameState.GameStateJump.Ended;
+                jgr.jgs.gameState = JumpGameState.GameStateJump.Ended;            
         }
 
-        if (showGUI)
+        //display add time text
+        if (showAddTime)
         {
             addTimeText.enabled = true;
             addTimeText.text = "+" + addTime.ToString("0");
-            Invoke("ShowTimerGUI", timeDisplayFrame);
+            Invoke("HideTimerGUI", timeDisplayFrame);
         }
     }
 
@@ -76,7 +93,7 @@ public class GameTimer : MonoBehaviour
         {
             GUI.Box(new Rect(10, 10, 30, 30), timer.ToString("0"));
 
-            if (showGUI)
+            if (showAddTime)
             {
                 GUI.Box(new Rect(15, 30, 30, 30), "+" + addTime.ToString("0"));
                 Invoke("ShowTimerGUI", timeDisplayFrame);
@@ -84,9 +101,20 @@ public class GameTimer : MonoBehaviour
         }
     }
 
-    void ShowTimerGUI()
+    void HideTimerGUI()
     {
-        showGUI = false;
+        showAddTime = false;
         addTimeText.enabled = false;
+    }
+
+    void SaveBestTime() {
+        //set best time as global time if PlayerPrefs key doesn't exist
+        if (!PlayerPrefs.HasKey("bestTime") || 
+            PlayerPrefs.GetFloat("bestTime") < globalTimer)
+        {
+            Debug.Log("Setting best time");
+            bestGameTime = globalTimer;
+            PlayerPrefs.SetFloat("bestTime", bestGameTime);
+        }
     }
 }

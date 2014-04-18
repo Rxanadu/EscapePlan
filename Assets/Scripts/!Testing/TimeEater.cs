@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TimeEater : MonoBehaviour {
+public class TimeEater : MonoBehaviour
+{
     public float moveRate = 7.0f;
     public float depletionRate = 1.5f;
 
@@ -9,29 +10,39 @@ public class TimeEater : MonoBehaviour {
 
     JumpGameReferences jgr;
 
-    void Awake() {
+    void Awake()
+    {
         jgr = GameObject.FindGameObjectWithTag(TagsAndLayers.gameController).GetComponent<JumpGameReferences>();
     }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (jgr.jgs.gameState == JumpGameState.GameStateJump.Started)
+        {
             MoveToPlayer();
 
-        if (exterior == null||interior==null)
-            return;
+            if (exterior == null || interior == null)
+                return;
 
-        exterior.rotation = Random.rotation;
-        interior.rotation = Quaternion.LookRotation(jgr.player.transform.position);
-	}
+            //rotate enemy exterior
+            exterior.rotation = Random.rotation;
 
-    void OnTriggerStay(Collider other) {
-        if (other.CompareTag(TagsAndLayers.player)) {
+            //have clock face look toward player
+            interior.rotation = Quaternion.LookRotation(jgr.player.transform.position);
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag(TagsAndLayers.player))
+        {
             float depletionStep = depletionRate * Time.deltaTime;
             jgr.gameTimer.timer -= depletionStep;
 
@@ -40,7 +51,8 @@ public class TimeEater : MonoBehaviour {
         }
     }
 
-    void OnTriggerExit(Collider other) {
+    void OnTriggerExit(Collider other)
+    {
         if (other.CompareTag(TagsAndLayers.player))
             jgr.musicController.audio.pitch = 1.0f;
     }
@@ -48,7 +60,8 @@ public class TimeEater : MonoBehaviour {
     /// <summary>
     /// move object toward player's position
     /// </summary>
-    void MoveToPlayer() {
+    void MoveToPlayer()
+    {
         Vector3 playerPosition = jgr.player.transform.position;
         float moveStep = moveRate * Time.deltaTime;
         transform.position = Vector3.Lerp(transform.position, playerPosition, moveStep);

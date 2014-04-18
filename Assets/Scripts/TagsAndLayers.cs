@@ -23,6 +23,7 @@ public class TagsAndLayers {
     public const string jumppadPillar = "JumppadPillar";
     public const string gameTimer = "GameTimer";
     public const string deathArea = "DeathArea";
+    public const string timeEater = "TimeEater";
 	#endregion
 
 	#region Layers
