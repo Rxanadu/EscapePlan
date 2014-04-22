@@ -44,32 +44,34 @@ public class MenuScreen : MonoBehaviour
 
     void Update()
     {
-        if (howToPlayTexture == null)
-            return;
-
-        if (howToPlayActive)
+        if (jgr.jgs.gameState == JumpGameState.GameStateJump.IntroducingGame)
         {
-            howToPlayTexture.enabled = true;
+            if (howToPlayTexture == null)
+                return;
 
-            //disable gui text elements
-            foreach (GUIText element in textElements)
-                element.enabled = false;
-        }
-        else if (!howToPlayActive)
-        {
-            howToPlayTexture.enabled = false;
-
-            //enable gui text elements
-            foreach (GUIText element in textElements)
-                element.enabled = true;
-        }
-
-        if (Input.GetMouseButtonDown(0) &&
-            jgr.jgs.gameState == JumpGameState.GameStateJump.IntroducingGame)
-        {
             if (howToPlayActive)
             {
-                howToPlayActive = false;
+                howToPlayTexture.enabled = true;
+
+                //disable gui text elements
+                foreach (GUIText element in textElements)
+                    element.enabled = false;
+            }
+            else if (!howToPlayActive)
+            {
+                howToPlayTexture.enabled = false;
+
+                //enable gui text elements
+                foreach (GUIText element in textElements)
+                    element.enabled = true;
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (howToPlayActive)
+                {
+                    howToPlayActive = false;
+                }
             }
         }
     }

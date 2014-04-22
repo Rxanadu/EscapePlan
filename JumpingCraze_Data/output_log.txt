@@ -15,13 +15,17 @@ Platform assembly: C:\Users\Rxanadu\Documents\GitHub\EscapePlan\JumpingCraze_Dat
 Loading C:\Users\Rxanadu\Documents\GitHub\EscapePlan\JumpingCraze_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Rxanadu\Documents\GitHub\EscapePlan\JumpingCraze_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
 Loading C:\Users\Rxanadu\Documents\GitHub\EscapePlan\JumpingCraze_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-- Completed reload, in  0.093 seconds
+- Completed reload, in  0.751 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
-UnloadTime: 5.554290 ms
+Setting best time
+ 
+(Filename: C:/BuildAgent/work/d3d49558e4d408f4/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 53)
+
+UnloadTime: 13.614269 ms
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 1846.
-Total: 2.067008 ms (FindLiveObjects: 0.135420 ms CreateObjectMapping: 0.027084 ms MarkObjects: 0.330754 ms  DeleteObjects: 0.017235 ms)
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 1848.
+Total: 3.334215 ms (FindLiveObjects: 0.171122 ms CreateObjectMapping: 0.040215 ms MarkObjects: 0.512135 ms  DeleteObjects: 0.021749 ms)
 

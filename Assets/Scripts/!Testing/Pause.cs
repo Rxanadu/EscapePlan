@@ -21,7 +21,6 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("game is paused: " + gamePaused);
         if (jgr.jgs.gameState == JumpGameState.GameStateJump.Starting ||
             jgr.jgs.gameState == JumpGameState.GameStateJump.Started)
         {
@@ -32,39 +31,11 @@ public class Pause : MonoBehaviour
 
             if (gamePaused)
             {
-                //stop things in game from moving
-                Time.timeScale = 0.0f;
-
-                //disabe player camera movement
-                jgr.player.GetComponent<MouseLook>().enabled = false;
-                Camera.main.GetComponent<MouseLook>().enabled = false;
-
-                //display pause screen
-                pauseTexture.enabled = true;
-
-                //allow player to move cursor
-                Screen.showCursor = true;
-
-                //stop music from playing
-                AudioListener.pause = true;
+                PauseGame();
             }
             if (!gamePaused)
             {
-                //get things going (again)
-                Time.timeScale = 1.0f;
-
-                //get player moving
-                jgr.player.GetComponent<MouseLook>().enabled = true;
-                Camera.main.GetComponent<MouseLook>().enabled = true;
-
-                //hide pause screen
-                pauseTexture.enabled = false;
-
-                //stop cursor from moving
-                Screen.showCursor = false;
-
-                //let music play
-                AudioListener.pause = false;
+                UnpauseGame();
             }
         }
 
@@ -90,23 +61,66 @@ public class Pause : MonoBehaviour
         GUILayout.BeginVertical();
         if (gamePaused)
         {
-            if (GUILayout.Button("To Main Menu"))
-            {
-                //un-pause game
-                gamePaused = false;
-
-                Application.LoadLevel(Application.loadedLevel);                
-            }
-            if (Application.platform == RuntimePlatform.WindowsPlayer ||
-                Application.platform == RuntimePlatform.OSXPlayer)
-            {
-                if (GUILayout.Button("Quit To Desktop"))
-                {
-                    Application.Quit();
-                }
-            }
+            DisplayPauseOptions();
         }
         GUILayout.EndVertical();
         GUILayout.EndArea();
+    }
+
+    //controls allaspects of pausing game
+    void PauseGame() {
+        //stop things in game from moving
+        Time.timeScale = 0.0f;
+
+        //disabe player camera movement
+        jgr.player.GetComponent<MouseLook>().enabled = false;
+        Camera.main.GetComponent<MouseLook>().enabled = false;
+
+        //display pause screen
+        pauseTexture.enabled = true;
+
+        //allow player to move cursor
+        Screen.showCursor = true;
+
+        //stop music from playing
+        AudioListener.pause = true;
+    }
+
+    //controls all aspects of unpausing game
+    void UnpauseGame() {
+        //get things going (again)
+        Time.timeScale = 1.0f;
+
+        //get player moving
+        jgr.player.GetComponent<MouseLook>().enabled = true;
+        Camera.main.GetComponent<MouseLook>().enabled = true;
+
+        //hide pause screen
+        pauseTexture.enabled = false;
+
+        //stop cursor from moving
+        Screen.showCursor = false;
+
+        //let music play
+        AudioListener.pause = false;
+    }
+
+    //shows all available pause menu options when game is pasued
+    void DisplayPauseOptions() {
+        if (GUILayout.Button("To Main Menu"))
+        {
+            Application.LoadLevel(Application.loadedLevel);
+
+            //un-pause game
+            gamePaused = false;
+        }
+        if (Application.platform == RuntimePlatform.WindowsPlayer ||
+            Application.platform == RuntimePlatform.OSXPlayer)
+        {
+            if (GUILayout.Button("Quit To Desktop"))
+            {
+                Application.Quit();
+            }
+        }
     }
 }
