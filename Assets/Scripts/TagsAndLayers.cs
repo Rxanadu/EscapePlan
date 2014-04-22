@@ -24,6 +24,7 @@ public class TagsAndLayers {
     public const string gameTimer = "GameTimer";
     public const string deathArea = "DeathArea";
     public const string timeEater = "TimeEater";
+    public const string menuController = "MenuController";
 	#endregion
 
 	#region Layers

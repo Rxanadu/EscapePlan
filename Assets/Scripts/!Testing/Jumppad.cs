@@ -64,14 +64,19 @@ public class Jumppad : MonoBehaviour
             transform.parent.collider.enabled = true;
         }
 
-        if (inactiveTimer >= inactiveTimeLimit ||
-            jgr.jgs.gameState == JumpGameState.GameStateJump.Ended)
+        if (inactiveTimer >= inactiveTimeLimit )
         {
             //reactivate pillar, jumppad
             pillarInactive = false;
 
             //reset timer for inactivation
             inactiveTimer = 0.0f;
+        }
+
+
+        //deactivate pillars, jumppads if game has ended
+        if (jgr.jgs.gameState == JumpGameState.GameStateJump.Ended) {
+            pillarInactive = true;
         }
     }
 

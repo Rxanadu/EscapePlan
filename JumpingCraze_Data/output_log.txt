@@ -15,17 +15,13 @@ Platform assembly: C:\Users\Rxanadu\Documents\GitHub\EscapePlan\JumpingCraze_Dat
 Loading C:\Users\Rxanadu\Documents\GitHub\EscapePlan\JumpingCraze_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Rxanadu\Documents\GitHub\EscapePlan\JumpingCraze_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
 Loading C:\Users\Rxanadu\Documents\GitHub\EscapePlan\JumpingCraze_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-- Completed reload, in  0.525 seconds
+- Completed reload, in  0.093 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
-Hi! The game's over
- 
-(Filename: C:/BuildAgent/work/d3d49558e4d408f4/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 53)
-
-UnloadTime: 8.538068 ms
+UnloadTime: 5.554290 ms
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 1402.
-Total: 3.147915 ms (FindLiveObjects: 0.167018 ms CreateObjectMapping: 0.046781 ms MarkObjects: 0.467816 ms  DeleteObjects: 0.022570 ms)
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 1846.
+Total: 2.067008 ms (FindLiveObjects: 0.135420 ms CreateObjectMapping: 0.027084 ms MarkObjects: 0.330754 ms  DeleteObjects: 0.017235 ms)
 

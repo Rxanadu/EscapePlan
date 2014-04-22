@@ -26,8 +26,10 @@ public class MenuScreen : MonoBehaviour
 
     void Start()
     {
+        //set game start to introducing the game
         jgr.jgs.gameState = JumpGameState.GameStateJump.IntroducingGame;
 
+        //place the menu camera's depth in front of player camera
         if (menuCamera == null)
             return;
         else
@@ -35,6 +37,9 @@ public class MenuScreen : MonoBehaviour
 
         //display best time on screen
         bestTime.text = PlayerPrefs.GetFloat("bestTime").ToString("{0:00}");
+
+        //disable crosshair
+        jgr.crosshair.enabled = false;
     }
 
     void Update()
@@ -43,9 +48,30 @@ public class MenuScreen : MonoBehaviour
             return;
 
         if (howToPlayActive)
+        {
             howToPlayTexture.enabled = true;
+
+            //disable gui text elements
+            foreach (GUIText element in textElements)
+                element.enabled = false;
+        }
         else if (!howToPlayActive)
+        {
             howToPlayTexture.enabled = false;
+
+            //enable gui text elements
+            foreach (GUIText element in textElements)
+                element.enabled = true;
+        }
+
+        if (Input.GetMouseButtonDown(0) &&
+            jgr.jgs.gameState == JumpGameState.GameStateJump.IntroducingGame)
+        {
+            if (howToPlayActive)
+            {
+                howToPlayActive = false;
+            }
+        }
     }
 
     void OnGUI()
@@ -54,28 +80,53 @@ public class MenuScreen : MonoBehaviour
 
         if (jgr.jgs.gameState == JumpGameState.GameStateJump.IntroducingGame)
         {
-            Rect area = new Rect(0, Screen.height / 3, .3f * Screen.width, Screen.height / 3);
-            GUILayout.BeginArea(area);
+            Rect menuArea = new Rect(0, Screen.height / 3, .3f * Screen.width, Screen.height / 3);
+            GUILayout.BeginArea(menuArea);
             GUILayout.BeginVertical();
-            if (GUILayout.Button("Play Game"))
-            {
-                //start the game
-                menuCamera.depth = -1;
-                foreach (GUIText element in textElements)
-                    element.enabled = false;
 
-                jgr.jgs.gameState = JumpGameState.GameStateJump.Starting;
-            }
+            if(!howToPlayActive)
+                DisplayMainMenu();
 
-            if (GUILayout.Button("How To Play"))
-            {
-                howToPlayActive = !howToPlayActive;
-            }
-
-            if (Application.platform == RuntimePlatform.WindowsPlayer)
-                if (GUILayout.Button("Quit Game")) { Application.Quit(); }
             GUILayout.EndVertical();
             GUILayout.EndArea();
         }
+    }
+
+    //shows all main menu options on screen
+    void DisplayMainMenu() {
+        //starts the game
+        if (GUILayout.Button("Play Game"))
+        {
+            StartGame();
+        }
+
+        if (GUILayout.Button("How To Play"))
+        {
+            howToPlayActive = !howToPlayActive;
+        }
+
+        if (Application.platform == RuntimePlatform.WindowsPlayer)
+        {
+            if (GUILayout.Button("Quit Game"))
+            {
+                Application.Quit();
+            }
+        }
+    }
+
+    //initializes the game 
+    void StartGame() {
+        //places menuCamera to the backside
+        menuCamera.depth = -1;
+
+        //disable main menu elements
+        foreach (GUIText element in textElements)
+            element.enabled = false;
+
+        //set game state to starting the game
+        jgr.jgs.gameState = JumpGameState.GameStateJump.Starting;
+
+        //enable crosshair
+        jgr.crosshair.enabled = true;
     }
 }

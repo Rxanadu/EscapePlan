@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// controls how Time Eater enemy behaves during gameplay
+/// </summary>
 public class TimeEater : MonoBehaviour
 {
     public float moveRate = 7.0f;
@@ -13,12 +16,6 @@ public class TimeEater : MonoBehaviour
     void Awake()
     {
         jgr = GameObject.FindGameObjectWithTag(TagsAndLayers.gameController).GetComponent<JumpGameReferences>();
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-
     }
 
     // Update is called once per frame

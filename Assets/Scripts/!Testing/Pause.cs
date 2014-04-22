@@ -21,6 +21,7 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("game is paused: " + gamePaused);
         if (jgr.jgs.gameState == JumpGameState.GameStateJump.Starting ||
             jgr.jgs.gameState == JumpGameState.GameStateJump.Started)
         {
@@ -28,42 +29,48 @@ public class Pause : MonoBehaviour
             {
                 gamePaused = !gamePaused;
             }
+
+            if (gamePaused)
+            {
+                //stop things in game from moving
+                Time.timeScale = 0.0f;
+
+                //disabe player camera movement
+                jgr.player.GetComponent<MouseLook>().enabled = false;
+                Camera.main.GetComponent<MouseLook>().enabled = false;
+
+                //display pause screen
+                pauseTexture.enabled = true;
+
+                //allow player to move cursor
+                Screen.showCursor = true;
+
+                //stop music from playing
+                AudioListener.pause = true;
+            }
+            if (!gamePaused)
+            {
+                //get things going (again)
+                Time.timeScale = 1.0f;
+
+                //get player moving
+                jgr.player.GetComponent<MouseLook>().enabled = true;
+                Camera.main.GetComponent<MouseLook>().enabled = true;
+
+                //hide pause screen
+                pauseTexture.enabled = false;
+
+                //stop cursor from moving
+                Screen.showCursor = false;
+
+                //let music play
+                AudioListener.pause = false;
+            }
         }
-        if (gamePaused)
-        {
-            //stop things in game from moving
-            Time.timeScale = 0.0f;
 
-            //disabe player camera movement
-            jgr.player.GetComponent<MouseLook>().enabled = false;
-            Camera.main.GetComponent<MouseLook>().enabled = false;
-
-            //display pause screen
-            pauseTexture.enabled = true;
-
-            //allow player to move cursor
-            Screen.showCursor = true;
-
-            //stop music from playing
-            AudioListener.pause = true;
-        }
-        if (!gamePaused)
-        {
-            //get things going (again)
-            Time.timeScale = 1.0f;
-
-            //get player moving
-            jgr.player.GetComponent<MouseLook>().enabled = true;
-            Camera.main.GetComponent<MouseLook>().enabled = true;
-
-            //hide pause screen
+        if (jgr.jgs.gameState == JumpGameState.GameStateJump.IntroducingGame) {
             pauseTexture.enabled = false;
-
-            //stop cursor from moving
-            Screen.showCursor = false;
-
-            //let music play
-            AudioListener.pause = false;
+            Screen.showCursor = true;
         }
     }
 
@@ -85,7 +92,10 @@ public class Pause : MonoBehaviour
         {
             if (GUILayout.Button("To Main Menu"))
             {
-                Application.LoadLevel(Application.loadedLevel);
+                //un-pause game
+                gamePaused = false;
+
+                Application.LoadLevel(Application.loadedLevel);                
             }
             if (Application.platform == RuntimePlatform.WindowsPlayer ||
                 Application.platform == RuntimePlatform.OSXPlayer)

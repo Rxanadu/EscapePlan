@@ -70,9 +70,10 @@ public class GameTimer : MonoBehaviour
             //save global time here
             SaveBestTime();
 
-            //reset timer
-            timer = 0;
+            //set timer to 0.0f
+            timer = 0.0f;
 
+            //end the game
             //only call if time <= 0
             if (jgr.jgs.gameState != JumpGameState.GameStateJump.Ended)
                 jgr.jgs.gameState = JumpGameState.GameStateJump.Ended;            

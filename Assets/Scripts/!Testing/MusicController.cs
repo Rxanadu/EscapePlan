@@ -51,8 +51,9 @@ public class MusicController : MonoBehaviour
                 }
                 break;
             case JumpGameState.GameStateJump.Starting:
-                if (audio.isPlaying) {
-                    audio.Stop(); ;
+                if (audio.isPlaying)
+                {
+                    audio.Stop();
                 }
                 break;
             case JumpGameState.GameStateJump.Started:
@@ -64,13 +65,24 @@ public class MusicController : MonoBehaviour
                     audio.Play();
                 break;
             case JumpGameState.GameStateJump.Ended:
-                if (audio.clip != deathClip)
+                //stop music from playing if timer is out
+                //if (jgr.gameTimer.timer <= 0)
+                //{
+                //    audio.Stop();
+                //    return;
+                //}
+
+                //only play music if player has entered into death area
+                if (jgr.deathArea.HasEnteredArea)
                 {
-                    audio.loop = false;
-                    audio.clip = deathClip;
+                    if (audio.clip != deathClip)
+                    {
+                        audio.loop = false;
+                        audio.clip = deathClip;
+                    }
+                    if (!audio.isPlaying)
+                        audio.Play();
                 }
-                if (!audio.isPlaying)
-                    audio.Play();
                 break;
         }
     }

@@ -12,25 +12,34 @@ public class JumpGameReferences : MonoBehaviour
     public JumpGameState jgs;
 
     [HideInInspector]
-    public MusicController musicController;
+    public MusicController musicController;     //controls all background music within game
 
     [HideInInspector]
-    public GameTimer gameTimer;
+    public GameTimer gameTimer;                 //controls time in which the game plays
 
     [HideInInspector]
-    public DeathArea deathArea;
+    public DeathArea deathArea;                 //ends game if player enters it
 
     [HideInInspector]
-    public SpawnDrop spawnDrop;
+    public SpawnDrop spawnDrop;                 //where player starts the game
 
     [HideInInspector]
-    public GameObject[] objectSpawners;
+    public MenuScreen menuScreen;               //displays main menu information
 
     [HideInInspector]
-    public GameObject[] jumppadPillars;
+    public Pause pause;                         //pauses the game, controls pause menu
 
     [HideInInspector]
-    public GameObject player;
+    public Crosshair crosshair;
+
+    [HideInInspector]
+    public GameObject[] objectSpawners;         //game objects where time extension objects will appear
+
+    [HideInInspector]
+    public GameObject[] jumppadPillars;         //used for traversing the arena
+
+    [HideInInspector]
+    public GameObject player;                   //the main player object
 
     void Awake()
     {
@@ -39,6 +48,9 @@ public class JumpGameReferences : MonoBehaviour
         gameTimer = GameObject.FindGameObjectWithTag(TagsAndLayers.gameTimer).GetComponent<GameTimer>();
         deathArea = GameObject.FindGameObjectWithTag(TagsAndLayers.deathArea).GetComponent<DeathArea>();       
         spawnDrop = GameObject.FindGameObjectWithTag(TagsAndLayers.spawnDrop).GetComponent<SpawnDrop>();
+        menuScreen = GameObject.FindGameObjectWithTag(TagsAndLayers.menuController).GetComponent<MenuScreen>();
+        pause = Camera.main.GetComponent<Pause>();
+        crosshair = Camera.main.GetComponent<Crosshair>();
 
         objectSpawners = GameObject.FindGameObjectsWithTag(TagsAndLayers.objectSpawner);
         jumppadPillars = GameObject.FindGameObjectsWithTag(TagsAndLayers.jumppadPillar);
